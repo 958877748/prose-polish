@@ -1,0 +1,31 @@
+name: Build and Package Application
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+        # 如果是其他环境请修改为适当命令
+
+      - name: Build Application
+        run: npm run build
+        # 请确认构建命令和脚本文件
+
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: built-application
+          path: dist/
+          # 如构建输出目录正确则保持，否则请调整
